@@ -4,8 +4,11 @@
 
 - A command-line application for a README file. 
 
-- Open your terminal and start the application withinn it. 
+- Open your terminal and start the application within it. 
 
 - Answer a list of questions regarding their GitHub username and project. 
 
-- All will result in a README file being generated.   
+- All will result in a README file being generated.  
+
+## Link
+

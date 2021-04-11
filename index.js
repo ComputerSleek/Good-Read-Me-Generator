@@ -1,87 +1,61 @@
-// TODO: Include packages needed for this application
+const inquirer = require('inquirer');
+const fs = require('fs');
+const util = require('util');
 
-var inquirer = require("inquirer");
-var generateMarkdown = require("./utils/generateMarkdown");
-var axios = require("axios");
-var fs = require("fs");
+const writeFileAsync = util.promisify(fs.writeFile);
 
-// TODO: Create a function to write README file
+const questions = () =>
+inquirer.prompt([
+    {
+        type: "input",
+        name: "coder",
+        message: "What is the coder's name?"
+    },
+    {
+        type: "input",
+        name: "editor",
+        message: "What is text editor do you use?"
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is your email address?"
+    },
+    {
+        type: "input",
+        name: "title",
+        message: "What is your project title?"
+    },
+    {
+        type: "input",
+        name: "school",
+        message: "What school are you studying at?"
+    },
+    {
+        type: "input",
+        name: "repo",
+        message: "Where are all your repositories?"
+    }
 
-function writeToFile(fileName, data) {
-    const goodREADME= generateMarkdown(data);
-    writeFileAsync(fileName, goodREADME);
-  }
-  
-// TODO: Create an array of questions for user input
-const questions = [
-  // questions to user using "inquirer"
-  {
-    type: "input",
-    message: "What is your GitHub user name?",
-    name: "username"
-  },
+])
 
-  {
-    type: "input",
-    message: "What is your project Title?",
-    name: "title",
-    default: "Good Read Me"
-  },
-
-  {
-    type: "input",
-    message: "What is your repo called?",
-    name: "repo",
-    default: "GoodREADMEGenerator"
-  },
-
-  {
-    type: "input",
-    message: "How do you describe your Project?.",
-    name: "desc",
-    default:
-      " This application will render a README.md file"
-  },
-
-  {
-    type: "input",
-    message: "What are the steps required to install your project?",
-    name: "install",
-    default: "Step1: Run npm install and Step2: Run node index.js"
-  },
-
-  {
-    type: "input",
-    message: "Write instructions for using your project.",
-    name: "usage",
-    default:
-      "1.Run node index.js, 2.Answers the questions, 3.The README.md file is thencreated. "
-  } 
-];
- 
-// TODO: Create a function to initialize app
- 
-function init() {
-  inquirer.prompt(questions).then(answers => {
-    console.log(answers);
-    axios
-      .get("https://api.github.com/users/" + answers.username)
-      .then(response => {
-        console.log(response);
-        var imageURL = response.data.avatar_url;
-        answers.image = imageURL;
-        console.log(imageURL);
-        fs.writeFile("README.md", generateMarkdown(answers), function(err) {
-          if (err) {
-            throw err;
-          }
-        });
-      });
-  });
+function generateMD(data){
+    return`# ${data.title}
+    ${data.badge}
+    ${data.description}
+    ## Table of Contents"
+    * [Installation] (#installation)
+    * [Questions](#questions)
+    ### Installation:
+    In order to install the necessary dependencies, open the console and run the following:
+    \`\`\`${data.installations}\`\`\`
+    ### Questions:
+    If you have any questions contact me on [GitHub](https://github.com/${data.username})
+    `;
 }
-// Function call to initialize app
-init();
- 
 
-
-
+questions()
+.then((data) => writeFileAsync('generateREADME.md',
+generateMD(data)))
+.then(() => console.log('Successfully wrote to index.html'))
+.catch((err) => console.error(err));
