@@ -35,6 +35,21 @@ inquirer.prompt([
         type: "input",
         name: "repo",
         message: "Where are all your repositories?"
+    },
+    {
+        type: "input",
+        name: "username",
+        message: "What is your GitHub username?"
+    }, 
+    {
+        type: "input",
+        name: "installations",
+        message: "How do you install dependencies?"
+    },
+    {
+        type: "input",
+        name: "usage",
+        message: "How do you use this repo?"
     }
 
 ])

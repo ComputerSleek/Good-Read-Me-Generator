@@ -6,7 +6,7 @@
     * [Questions](#questions)
     ### Installation:
     In order to install the necessary dependencies, open the console and run the following:
-    ```undefined```
+    ```npm init -y```
     ### Questions:
-    If you have any questions contact me on [GitHub](https://github.com/undefined)
+    If you have any questions contact me on [GitHub](https://github.com/ComputerSleek)
     
